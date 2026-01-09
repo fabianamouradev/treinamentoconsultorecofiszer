@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal do Consultor | ECO FISZER</title>
+    <style>
+        :root {
+            --primary-color: #003366; /* Azul Institucional */
+            --secondary-color: #f4f6f9; /* Fundo Cinza Suave */
+            --accent-color: #d4af37; /* Dourado */
+            --text-color: #333333;
+            --white: #ffffff;
+            --success: #27ae60;
+            --danger: #c0392b;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+
+        body { background-color: var(--secondary-color); color: var(--text-color); line-height: 1.6; padding-bottom: 50px; }
+
+        /* HEADER */
+        header {
+            background-color: var(--white);
+            padding: 1.5rem 5%;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 3px solid var(--primary-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo { font-size: 1.5rem; font-weight: 800; color: var(--primary-color); text-transform: uppercase; letter-spacing: 1px; }
+        .logo span { color: var(--accent-color); }
+
+        nav ul { display: flex; list-style: none; gap: 20px; }
+        nav a { text-decoration: none; color: #555; font-weight: 600; font-size: 0.9rem; transition: 0.3s; }
+        nav a:hover { color: var(--primary-color); }
+
+        /* HERO SECTION */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #001a33 100%);
+            color: var(--white);
+            padding: 3rem 5%;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .hero h1 { font-size: 2.2rem; margin-bottom: 10px; }
+        .hero p { opacity: 0.9; max-width: 800px; margin: 0 auto; }
+
+        /* CONTENT CONTAINER */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        /* SECTIONS */
+        .section-header {
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+            border-left: 5px solid var(--accent-color);
+            padding-left: 15px;
+        }
+        .section-header h2 { color: var(--primary-color); font-size: 1.8rem; }
+        .section-header p { color: #666; font-size: 0.95rem; }
+
+        /* CARDS & BOXES */
+        .card {
+            background: var(--white);
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+        .card-title { color: var(--primary-color); font-weight: 700; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+
+        /* ACCORDIONS (DETAILS/SUMMARY) */
+        details {
+            background: var(--white);
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #e0e0e0;
+            overflow: hidden;
+        }
+        summary {
+            padding: 15px 20px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--primary-color);
+            background: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            list-style: none;
+            transition: background 0.2s;
+        }
+        summary:hover { background: #f9f9f9; }
+        summary::after { content: '+'; font-size: 1.3rem; color: var(--accent-color); }
+        details[open] summary { background: #f0f4f8; border-bottom: 1px solid #e0e0e0; }
+        details[open] summary::after { content: '-'; }
+        
+        .details-body { padding: 25px; font-size: 0.95rem; color: #444; }
+
+        /* TABLES */
+        .table-custom { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        .table-custom th { background: var(--primary-color); color: white; padding: 12px; text-align: left; }
+        .table-custom td { padding: 12px; border-bottom: 1px solid #eee; }
+        .check { color: var(--success); font-weight: bold; }
+        .cross { color: var(--danger); font-weight: bold; }
+
+        /* TEXT HIGHLIGHTS */
+        .highlight-box { background: #eef2f7; padding: 15px; border-left: 4px solid var(--primary-color); margin: 15px 0; border-radius: 4px; }
+        .alert-box { background: #fff8e1; padding: 15px; border-left: 4px solid var(--accent-color); margin: 15px 0; border-radius: 4px; color: #5a4a1b; }
+        .danger-box { background: #fdecea; padding: 15px; border-left: 4px solid var(--danger); margin: 15px 0; border-radius: 4px; color: #721c24; }
+        
+        /* LISTS */
+        ul.custom-list { list-style: none; }
+        ul.custom-list li { margin-bottom: 8px; padding-left: 20px; position: relative; }
+        ul.custom-list li::before { content: '•'; color: var(--accent-color); font-weight: bold; position: absolute; left: 0; }
+
+        /* SCRIPT STYLE */
+        .script-bubble {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+        .script-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: #888;
+            margin-bottom: 5px;
+            display: block;
+            font-weight: 700;
+        }
+        .script-text { font-style: italic; color: #333; }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            nav { display: none; }
+            .hero h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">ECO <span>FISZER</span></div>
+    <nav>
+        <ul>
+            <li><a href="#institucional">Institucional</a></li>
+            <li><a href="#tecnico">Técnico & Avaliação</a></li>
+            <li><a href="#atendimento">Atendimento & Scripts</a></li>
+            <li><a href="#juridico">Jurídico & Remuneração</a></li>
+        </ul>
+    </nav>
+</header>
+
+<div class="hero">
+    <h1>Portal do Consultor</h1>
+    <p>Formação ética, técnica e humana para representação institucional.</p>
+</div>
+
+<div class="container">
+
+    <section id="institucional">
+        <div class="section-header">
+            <h2>1. Identidade e Papel do Consultor</h2>
+            <p>Quem somos, o que você faz e os limites da atuação.</p>
+        </div>
+
+        <details>
+            <summary>Manifesto e Identidade ECO FISZER</summary>
+            <div class="details-body">
+                <p>A ECO FISZER é especializada em Terapia ABA, Avaliação Neuropsicológica e Psicologia baseada em evidências.</p>
+                <div class="highlight-box">
+                    <strong>Missão:</strong> Promover cuidado com base em conhecimento. Ser ponte entre o potencial da criança e um mundo que a compreenda.
+                </div>
+                <p><strong>Nossos Pilares:</strong> Técnica, Ciência, Humanidade e Responsabilidade Ética. Não prometemos cura, prometemos compromisso.</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>O Papel do Consultor (O que você é vs. O que não é)</summary>
+            <div class="details-body">
+                <p><strong>Quem você é:</strong> Um profissional de apoio estratégico. Sua função é relacional, educativa e de acolhimento.</p>
+                <p><strong>O que você faz:</strong> Acolhe famílias, explica serviços, organiza dados, agenda avaliações com a equipe técnica.</p>
+                <div class="danger-box">
+                    <strong>Você NÃO é:</strong> Psicólogo, Vendedor de Terapia ou Agente Comercial. Você não realiza atendimentos e nem prescreve tratamentos.
+                </div>
+            </div>
+        </details>
+
+        <details>
+            <summary>O que Pode x Não Pode (Manual de Ética)</summary>
+            <div class="details-body">
+                <table class="table-custom">
+                    <tr>
+                        <th>✅ O QUE PODE</th>
+                        <th>❌ O QUE NÃO PODE</th>
+                    </tr>
+                    <tr>
+                        <td>Explicar o que é ABA e serviços da clínica.</td>
+                        <td>Prometer resultados ou cura ("seu filho vai falar").</td>
+                    </tr>
+                    <tr>
+                        <td>Acolher e orientar o agendamento da avaliação.</td>
+                        <td>Sugerir diagnóstico ou interpretar sintomas.</td>
+                    </tr>
+                    <tr>
+                        <td>Falar sobre valores administrativos.</td>
+                        <td>Negociar terapia como "produto" ou promoção.</td>
+                    </tr>
+                    <tr>
+                        <td>Dizer que a avaliação é feita por especialistas.</td>
+                        <td>Dizer quantas horas a criança precisa (ato clínico).</td>
+                    </tr>
+                </table>
+            </div>
+        </details>
+    </section>
+
+    <section id="tecnico">
+        <div class="section-header">
+            <h2>2. Conhecimento Técnico e Produtos</h2>
+            <p>Detalhes profundos sobre ABA, Avaliação Neuropsicológica e Estrutura de Horas.</p>
+        </div>
+
+        <details open>
+            <summary>🧠 Avaliação Neuropsicológica (Detalhado)</summary>
+            <div class="details-body">
+                <p><strong>O que é:</strong> Processo técnico conduzido por psicólogo especialista para mapear o funcionamento do cérebro. Serve para auxiliar diagnósticos (TEA, TDAH, Dislexia) e orientar condutas.</p>
+                
+                <h4 style="color:var(--primary-color); margin-top:15px;">O que é avaliado? (Testes Padronizados)</h4>
+                <ul class="custom-list">
+                    <li>Inteligência geral (QI)</li>
+                    <li>Memória (visual, auditiva, curto/longo prazo)</li>
+                    <li>Atenção e concentração</li>
+                    <li>Funções executivas (planejamento, controle)</li>
+                    <li>Linguagem e processamento sensorial</li>
+                </ul>
+
+                <h4 style="color:var(--primary-color); margin-top:15px;">Como funciona o processo? (Etapas)</h4>
+                <ol style="margin-left:20px; margin-top:10px;">
+                    <li><strong>1ª Sessão - Entrevista Inicial:</strong> Levantamento de queixas e histórico.</li>
+                    <li><strong>2 a 6 Sessões - Aplicação:</strong> Sessões de testes com a criança (aprox. 50 min cada).</li>
+                    <li><strong>Devolutiva:</strong> Entrega de laudo técnico detalhado.</li>
+                </ol>
+
+                <div class="highlight-box">
+                    <strong>Papel do Consultor:</strong> Explicar a importância, mas NUNCA interpretar a necessidade. Agendar com a equipe técnica.
+                </div>
+            </div>
+        </details>
+
+        <details>
+            <summary>Terapia ABA e a Tríade (Clínica + Casa + Escola)</summary>
+            <div class="details-body">
+                <p><strong>O que é ABA:</strong> Ciência que ensina habilidades adaptativas e reduz comportamentos prejudiciais através de reforçamento positivo e repetição.</p>
+                
+                <h4 style="margin-top:15px;">A Tríade da Generalização:</h4>
+                <p>O comportamento não ocorre só na clínica. Trabalhamos em 3 frentes:</p>
+                <ul class="custom-list">
+                    <li><strong>Clínica:</strong> Base estruturada.</li>
+                    <li><strong>Casa (Domiciliar):</strong> Aplicação no ambiente real (banho, comida, rotina). Não é babá, é intervenção técnica.</li>
+                    <li><strong>Escola:</strong> Foco na inclusão social e adaptação pedagógica.</li>
+                </ul>
+            </div>
+        </details>
+
+        <details>
+            <summary>💰 Valores de Referência e Carga Horária</summary>
+            <div class="details-body">
+                <div class="alert-box">
+                    ⚠️ <strong>Atenção:</strong> Estas informações servem para explicar a estrutura administrativa. O consultor NÃO define horas.
+                </div>
+
+                <h4 style="margin-top:15px;">Valores Institucionais</h4>
+                <p>• <strong>Duração da Sessão:</strong> 1 hora (60 minutos).</p>
+                <p>• <strong>Valor de Referência:</strong> R$ 200,00 por sessão.</p>
+
+                <h4 style="margin-top:15px;">Estrutura de Horas (Estimativa ABA)</h4>
+                <p>A ABA exige constância. É comum (mas não regra) atingir cerca de <strong>20 horas semanais</strong> no total.</p>
+                <ul class="custom-list">
+                    <li><strong>Domiciliar:</strong> Geralmente entre 3 e 6 horas semanais.</li>
+                    <li><strong>Escolar:</strong> Geralmente entre 14 e 17 horas semanais (devido à complexidade do ambiente).</li>
+                </ul>
+                <p style="font-size:0.9rem; color:#666; margin-top:10px;">*Quem define a carga horária exata é EXCLUSIVAMENTE a equipe clínica após avaliação.</p>
+            </div>
+        </details>
+    </section>
+
+    <section id="atendimento">
+        <div class="section-header">
+            <h2>3. Scripts de Atendimento e Objeções</h2>
+            <p>O que falar, como falar e como responder perguntas difíceis.</p>
+        </div>
+
+        <details>
+            <summary>Passo a Passo do Atendimento (7 Etapas)</summary>
+            <div class="details-body">
+                <ol style="margin-left:20px;">
+                    <li><strong>Cumprimente com empatia:</strong> "Olá, meu nome é [nome]..."</li>
+                    <li><strong>Escute sem pressa:</strong> Valide o que a família diz.</li>
+                    <li><strong>Valide emoções:</strong> "Imagino que seja desafiador."</li>
+                    <li><strong>Explique ABA:</strong> Ciência, ética, sem promessas.</li>
+                    <li><strong>Explique os serviços:</strong> Avaliação é o primeiro passo.</li>
+                    <li><strong>Oriente o próximo passo:</strong> Agendar a avaliação.</li>
+                    <li><strong>Sem pressão:</strong> Jamais use urgência ("tem que fechar agora").</li>
+                </ol>
+            </div>
+        </details>
+
+        <details>
+            <summary>📞 Script Telefônico (Texto Exato)</summary>
+            <div class="details-body">
+                <div class="script-bubble">
+                    <span class="script-label">Abertura</span>
+                    <p class="script-text">"Olá, tudo bem? Quem fala é [SEU NOME], da Clínica ECO FISZER. Recebemos seu contato e gostaria de conversar um pouquinho com você, pode falar agora com calma?"</p>
+                </div>
+                <div class="script-bubble">
+                    <span class="script-label">Escuta Ativa</span>
+                    <p class="script-text">"Você poderia me contar o que motivou o contato com a gente? Fique à vontade, estou aqui para te ouvir."</p>
+                </div>
+                <div class="script-bubble">
+                    <span class="script-label">Explicação</span>
+                    <p class="script-text">"Na ECO FISZER, trabalhamos com acompanhamento psicológico especializado, com base na ciência da ABA. Essa abordagem ajuda a desenvolver habilidades importantes... O primeiro passo sempre será a avaliação com nossa equipe técnica."</p>
+                </div>
+            </div>
+        </details>
+
+        <details>
+            <summary>📱 Script WhatsApp (Texto Exato)</summary>
+            <div class="details-body">
+                <div class="script-bubble">
+                    <span class="script-label">Primeiro Contato</span>
+                    <p class="script-text">"Olá! Tudo bem? Quem fala é [SEU NOME], consultor da ECO FISZER. Recebemos sua solicitação e quero, com muito respeito, entender o que está acontecendo. Me conta um pouquinho… como posso te ajudar?"</p>
+                </div>
+                <div class="script-bubble">
+                    <span class="script-label">Após resposta</span>
+                    <p class="script-text">"Na ECO FISZER trabalhamos com ABA, que ensina habilidades fundamentais. O primeiro passo é uma avaliação inicial com o psicólogo para entender o perfil do seu filho."</p>
+                </div>
+            </div>
+        </details>
+
+        <details>
+            <summary>🛑 Manual de Objeções (Perguntas Difíceis)</summary>
+            <div class="details-body">
+                <p><strong>1. "São muitas horas, né?"</strong></p>
+                <div class="highlight-box">"Na ABA, trabalhamos com repetição e constância. O cérebro aprende com a prática. Por isso é comum ter mais horas. Mas a quantidade exata é definida pela equipe clínica."</div>
+
+                <p><strong>2. "É muito caro..."</strong></p>
+                <div class="highlight-box">"Entendo. É um investimento importante. Nosso trabalho é feito por psicólogos especialistas e baseado em ciência. Não vendemos pacotes, mas um plano clínico sério."</div>
+
+                <p><strong>3. "A escola disse que não precisa de profissional."</strong></p>
+                <div class="highlight-box">"Algumas escolas não conhecem a fundo o papel do psicólogo escolar. Nosso profissional não substitui o professor, ele atua na adaptação e inclusão, com alinhamento."</div>
+
+                <p><strong>4. "Precisa mesmo de avaliação? Não pode começar logo?"</strong></p>
+                <div class="highlight-box">"A avaliação é o ponto mais importante. Sem conhecer a criança a fundo, não seria responsável nem ético iniciar qualquer intervenção."</div>
+            </div>
+        </details>
+    </section>
+
+    <section id="juridico">
+        <div class="section-header">
+            <h2>4. Jurídico e Remuneração</h2>
+            <p>Contrato, Pagamento e Regras de Ouro.</p>
+        </div>
+
+        <div class="card">
+            <h3 class="card-title">Remuneração Detalhada</h3>
+            <div class="details-body">
+                <p><strong>Modelo:</strong> Você é prestador de serviço autônomo (Sem vínculo CLT). Pode atuar como PJ ou RPA.</p>
+                
+                <div class="highlight-box" style="text-align: center; font-size: 1.1rem;">
+                    Você recebe <strong>3,13%</strong> por processo administrativo concluído.
+                </div>
+                
+                <p><strong>O que é Processo Concluído?</strong> Acolhimento + Orientação + Agendamento + Documentação entregue.</p>
+                <p><strong>Pagamento:</strong> Mensal, via transferência bancária mediante Nota Fiscal.</p>
+                
+                <div class="danger-box">
+                    <strong>IMPORTANTE:</strong> Você NÃO recebe por "venda", número de pacientes ou diagnóstico. Isso evita conflito ético.
+                </div>
+            </div>
+        </div>
+
+        <details>
+            <summary>Segurança Jurídica e Sigilo (LGPD)</summary>
+            <div class="details-body">
+                <p><strong>Sigilo:</strong> Absolutamente tudo é confidencial. Você está sujeito ao Código Civil e LGPD.</p>
+                <ul class="custom-list" style="color:var(--danger);">
+                    <li>Proibido compartilhar prints.</li>
+                    <li>Proibido comentar casos externamente.</li>
+                    <li>Proibido divulgar nomes.</li>
+                </ul>
+                <p><strong>Responsabilidade Civil:</strong> Se você prometer cura, atuar como psicólogo ou manipular decisões, será responsabilizado civilmente.</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>Termo de Responsabilidade</summary>
+            <div class="details-body">
+                <p><em>"Declaro que compreendi todas as diretrizes éticas e jurídicas da minha atuação como consultor(a) da ECO FISZER. Comprometo-me a representar a clínica com ética, responsabilidade, confidencialidade e dentro dos limites do meu escopo."</em></p>
+            </div>
+        </details>
+    </section>
+
+</div>
+
+<footer>
+    <p><strong>ECO FISZER PSICOLOGIA CLÍNICA</strong> &copy; 2024</p>
+    <p>Material Interno Confidencial. Baseado na Lei nº 13.429/2017 e Código de Ética Profissional.</p>
+</footer>
+
+</body>
+</html>
